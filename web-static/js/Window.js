@@ -31,6 +31,7 @@ Window.prototype.addPage = function(title, page){
 	
 	var li = document.createElement("li");
 	li.innerHTML = title;
+	li.page = page;
 	this.ul.appendChild(li);
 	
 	li.addEventListener("click", function(){
@@ -44,8 +45,10 @@ Window.prototype.addPage = function(title, page){
 
 Window.prototype.showPage = function(elm){
 	if(this.currentPage) {
+		this.currentPage.page.setVisible(false);
 		this.currentPage.setAttribute("class", "");
 	}
 	this.currentPage = elm;
+	this.currentPage.page.setVisible(true);
 	this.currentPage.setAttribute("class", "selected");
 };

@@ -28,14 +28,30 @@ InfoPage.prototype = new Page();
 
 InfoPage.prototype.refreshData = function(playerData){
 	for(var id in playerData) {
-		this.attributeList[id].html(playerData[id]);
+		switch(id) {
+			case "progress" :
+				this.$playerProgressIndic.css("width", Math.round(playerData.progress * 100) + '%');
+				break;
+			case "name" :
+				this.$playerName.html(playerData.name);
+				break;
+			case "title" :
+				this.$playerTitle.html(playerData.title);
+				break;
+			default :
+				if(typeof(this.attributeList[id]) != "undefined"){
+					this.attributeList[id].html(playerData[id]);
+				}
+				break;
+		}
 	}
 };
 InfoPage.prototype.addAttribute = function(id, label){
-	var $dt = $("<dt/>").html(label);
+	var $dt = $("<dt/>").append(label);
 	this.$attributeContainer.append($dt);
 	
-	var $dd = $("<dd/>").addClass(id).html("0");
+	var $dd = $("<dd/>").addClass(id).append(0);
 	this.$attributeContainer.append($dd);
+	
 	this.attributeList[id] = $dd;
 };
