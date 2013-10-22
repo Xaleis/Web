@@ -27,30 +27,15 @@ var InfoPage = function(){
 InfoPage.prototype = new Page();
 
 InfoPage.prototype.refreshData = function(playerData){
-	for(var i in playerData){
-		switch(i){
-		case "name":
-			this.$playerName.html(playerData.name);
-			break;
-		case "title":
-			this.$playerTitle.html(playerData.title);
-			break;
-		case "progress":
-			this.$playerProgressIndic.css("width", Math.round(playerData.progress * 100) + '%');
-			break;
-		default:
-			if(typeof(this.attributeList[i]) != "undefined"){
-				this.attributeList[i].html(playerData[i]);
-			}
-		}
+	for(var id in playerData) {
+		this.attributeList[id].html(playerData[id]);
 	}
 };
 InfoPage.prototype.addAttribute = function(id, label){
-	var dt = $("<dt>").append(label);
-	this.$attributeContainer.append(dt);
+	var $dt = $("<dt/>").html(label);
+	this.$attributeContainer.append($dt);
 	
-	var dd = $("<dd>").addClass(id);
-	this.$attributeContainer.append(dd);
-	
-	this.attributeList[id] = dd;
+	var $dd = $("<dd/>").addClass(id).html("0");
+	this.$attributeContainer.append($dd);
+	this.attributeList[id] = $dd;
 };
