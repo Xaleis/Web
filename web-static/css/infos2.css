@@ -16,6 +16,21 @@
 		3px 3px 7px #caffff, -3px -3px 7px #caffff, -3px 3px 7px #caffff, 3px -3px 7px #caffff;
 	text-align: center;
 	margin: 5px;
+	-webkit-animation: scintille 2s infinite linear;
+}
+@-webkit-keyframes scintille{
+	from{
+		text-shadow: 1px 1px 0 black, -1px -1px 0 black, -1px 1px 0 black, 1px -1px 0 black,
+		3px 3px 7px #caffff, -3px -3px 7px #caffff, -3px 3px 7px #caffff, 3px -3px 7px #caffff;
+	}
+	50%{
+		text-shadow: 1px 1px 0 black, -1px -1px 0 black, -1px 1px 0 black, 1px -1px 0 black,
+		3px 3px 17px #caffff, -3px -3px 17px #caffff, -3px 3px 17px #caffff, 3px -3px 17px #caffff;
+	}
+	to{
+		text-shadow: 1px 1px 0 black, -1px -1px 0 black, -1px 1px 0 black, 1px -1px 0 black,
+		3px 3px 7px #caffff, -3px -3px 7px #caffff, -3px 3px 7px #caffff, 3px -3px 7px #caffff;
+	}
 }
 .player-title{
 	color: yellow;
@@ -32,6 +47,18 @@
 	background-position: left center;
 	text-align: center;
 	margin: auto;
+	-webkit-animation: disappear 2s infinite linear;
+}
+@-webkit-keyframes disappear {
+	from{
+		opacity:1;
+	}
+	50%{
+		opacity:0.2;
+	}
+	to{
+		opacity:1;
+	}
 }
 .player-progress-indic{
 	width: 40%;
@@ -47,6 +74,21 @@
 	line-height: 17px; 
 	color: skyblue;
 	text-shadow: 1px 1px 0 black, -1px -1px 0 black, -1px 1px 0 black, 1px -1px 0 black;
+	-webkit-animation: eclat 1s infinite linear;
+}
+@-webkit-keyframes eclat {
+	from{
+		
+	}
+	30%{
+		
+	}
+	60%{
+		
+	}
+	to{
+		
+	}
 }
 .hp{
 	background-image: url(../img/images/heart.png);
@@ -55,6 +97,21 @@
 	padding-right: 18px;
 	color: red;
 	text-shadow: 1px 1px 0 black, -1px -1px 0 black, -1px 1px 0 black, 1px -1px 0 black;
+	-webkit-animation: heart 1s infinite linear;
+}
+@-webkit-keyframes heart {
+	from{
+		-webkit-transform:scale(1,1);
+	}
+	30%{
+		-webkit-transform:scale(0.6,0.6);
+	}
+	60%{
+		-webkit-transform:scale(1.2,1.2);
+	}
+	to{
+		-webkit-transform:scale(1,1);
+	}
 }
 .power{
 	color: yellow;

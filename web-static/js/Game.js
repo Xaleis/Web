@@ -28,9 +28,13 @@ var Game = function(){
 	$scene = $("#main-scene");
 
 	$("#gui").append($("<div>").button().css({position: "absolute", top:"5px", left:"5px"}).append("Menu").click(function(){
-		$(win.root).toggle('fade', 200);
+		if($(win.root).hasClass("visible")){
+			$(win.root).removeClass("visible");
+		} else {
+			$(win.root).addClass("visible");
+		}
 	}));
-	$(win.root).hide();
+	/*$(win.root).hide();*/
 
 	player = new Player($scene);
 	camera = new Camera($scene, player);
