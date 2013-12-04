@@ -1,4 +1,4 @@
-var Player = function(){
+var Player = function(assetManager){
 	var self = this;
 	Character.call(this);
 	
@@ -13,21 +13,21 @@ var Player = function(){
 		x: 600,
 		y: 200
 	};
-
-	/*this.spriteList = {
-		"idle-left": new Sprite(this.$elm, "idle-left", "/cours-web-static/img/sprite/revert-idle-1-2-1.png", 2048, 256, 16, 2, true),
-		"idle-right": new Sprite(this.$elm, "idle-right", "/cours-web-static/img/sprite/idle-1-2-1.png", 2048, 256, 16, 2, true),
-		"attack-left": new Sprite(this.$elm, "attack-left", "/cours-web-static/img/sprite/revert-attack-1-2-1.png", 2048, 128, 16, 1, false),
-		"attack-right": new Sprite(this.$elm, "attack-right", "/cours-web-static/img/sprite/attack-1-2-1.png", 2048, 128, 16, 1, false),
-		"move-left": new Sprite(this.$elm, "move-left", "/cours-web-static/img/sprite/revert-move-1-2-1.png", 896, 128, 7, 1, true),
-		"move-right": new Sprite(this.$elm, "move-right", "/cours-web-static/img/sprite/move-1-2-1.png", 896, 128, 7, 1, true)
-	};
+	
+	this.centerX = 64;
+	this.centerY = 120;
+	
+	this.createSprite("idle",assetManager.getImage("player-idle"), 2048, 256, 16, 2, true);
+	this.createSprite("attack",assetManager.getImage("player-attack"), 2048, 128, 16, 1, false);
+	this.createSprite("move",assetManager.getImage("player-move"), 896, 128, 7, 1, true);
+	
+	for(var i in this.spriteList) {
+		this.spriteList[i].setCenter(this.centerX, this.centerY);
+	}
 
 	this.keyList = {};
-	this.spriteList["move-left"].frameCount = 6;
-	this.spriteList["move-right"].frameCount = 6;
 	this.revertDirection = false;
-	this.setSprite("idle");*/
+	this.setSprite("idle");
 };
 Player.MIN_Y = 1455;
 Player.MAX_Y = 1920;
@@ -73,7 +73,6 @@ Player.prototype.update = function(deltaTime){
 					move.x = -1;
 				break;
 				case "115", "83":
-					//this.revertDirection = false;
 					move.y = 1;
 				break;
 				case "100", "68":
@@ -81,7 +80,6 @@ Player.prototype.update = function(deltaTime){
 					move.x = 1;
 				break;
 				case "122", "90":
-					//this.revertDirection = true;
 					move.y = -1;
 				break;
 			}
@@ -103,7 +101,18 @@ Player.prototype.onKeyDown = function(k){
 		var lastAnim = this.lastAnimId;
 		this.setSprite("attack", function(){
 			self.setSprite(lastAnim);
-			camera.shake(3);
+			for (var i in game.mobList) {
+				if(self.x - 40 <  game.mobList[i].x && game.mobList[i].x < self.x + 40) {
+					if(self.y - 50 < game.mobList[i].y && game.mobList[i].y < self.y + 50) {
+						camera.shake(3);
+						game.mobList[i].setSprite("death");
+						setTimeout(function() {
+							game.mobList.splice(i, 1);
+						}, 5000);
+					}
+				}
+			}
+			
 		});
 	}
 	this.keyList[k.which] = true;
