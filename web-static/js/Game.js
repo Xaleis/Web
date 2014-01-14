@@ -46,7 +46,10 @@ var Game = function(){
 		"mob-death": "/cours-web-static/img/getImage.php?url=sprite/mob-death.png&sleep=" + sleep
 	};
 	
-	var soundList= {};
+	var soundList= {
+		"music": "/cours-web-static/sound/15 We Have To Defeat It.mp3",
+		"music2": "/cours-web-static/sound/19 Luminous Sword.mp3"
+	};
 	this.assetManager = new AssetManager();
 	this.assetManager.startLoading(imageList,soundList);
 	player = new Player(this.assetManager);
@@ -105,6 +108,8 @@ Game.prototype.mainLoop = function(){
 	var loadingAlpha = 0;
 	var playerStatus = false;
 	if (this.assetManager.isDoneLoading()) {
+		//var sound = this.assetManager.getSound("music2");
+		sound.play();
 		loadingAlpha = tween(1, 0, this.assetManager.loadingEndTime, fadeDuration, "easeInOut");
 		this.graphics.save();
 		camera.render(this.graphics);
@@ -112,14 +117,20 @@ Game.prototype.mainLoop = function(){
 		
 		player.update(localTimeDelta / 1000);
 		
+		var bRender = false;
 		for(var i in this.mobList) {
-			if(this.mobList[i].y <= player.y) {
+			if(this.mobList[i].y < player.y) {
 				this.mobList[i].render(this.graphics);
-				player.render(this.graphics);
 			} else {
-				//player.render(this.graphics);
+				if(!bRender) {
+					player.render(this.graphics);
+					bRender = true;
+				}
 				this.mobList[i].render(this.graphics);
 			}
+		}
+		if(!bRender) {
+			player.render(this.graphics);
 		}
 		
 		this.graphics.restore();
